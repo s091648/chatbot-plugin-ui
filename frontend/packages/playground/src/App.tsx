@@ -4,8 +4,8 @@ import {
   ChatbotPlugin,
   useChat,
   type Message,
-} from '@Teng91/chatbot-plugin-ui'
-import '@Teng91/chatbot-plugin-ui/dist/style.css'
+} from '@s091648/chatbot-plugin-ui'
+import '@s091648/chatbot-plugin-ui/dist/style.css'
 
 // Mock messages for previewing without a real backend
 const MOCK_MESSAGES: Message[] = [

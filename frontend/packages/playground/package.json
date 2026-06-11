@@ -7,7 +7,7 @@
     "build": "vite build"
   },
   "dependencies": {
-    "@Teng91/chatbot-plugin-ui": "file:../chatbot-plugin-ui",
+    "@s091648/chatbot-plugin-ui": "file:../chatbot-plugin-ui",
     "react": "^18.3.0",
     "react-dom": "^18.3.0"
   },

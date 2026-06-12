@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect, type KeyboardEvent } from 'react'
 import '../../styles/base.css'
-import { BotIcon, ChatBubbleIcon, CloseIcon, SendIcon } from '../../icons'
+import { BotIcon, ChatBubbleIcon, CloseIcon, ComposeIcon, SendIcon } from '../../icons'
 import { MessageBubble } from './MessageBubble'
 import { ToolCallBlock } from './ToolCallBlock'
 import type { ChatbotPluginProps } from '../../types'
@@ -14,6 +14,7 @@ export function ChatbotPlugin({
   messages,
   onSend,
   isLoading = false,
+  onNewChat,
   unreadCount,
   theme = 'auto',
   className = '',
@@ -75,13 +76,25 @@ export function ChatbotPlugin({
               <div className={styles.headerSub}>Online</div>
             </div>
           </div>
-          <button
-            className={styles.closeBtn}
-            onClick={() => setOpen(false)}
-            aria-label="Close chat"
-          >
-            <CloseIcon size={18} />
-          </button>
+          <div className={styles.headerActions}>
+            {onNewChat && (
+              <button
+                className={styles.headerBtn}
+                onClick={onNewChat}
+                disabled={isLoading}
+                aria-label="New conversation"
+              >
+                <ComposeIcon size={16} />
+              </button>
+            )}
+            <button
+              className={styles.headerBtn}
+              onClick={() => setOpen(false)}
+              aria-label="Close chat"
+            >
+              <CloseIcon size={18} />
+            </button>
+          </div>
         </header>
 
         {/* Messages */}

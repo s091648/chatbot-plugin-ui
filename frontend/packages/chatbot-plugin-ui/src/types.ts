@@ -77,6 +77,7 @@ export interface ChatbotPluginProps {
   messages: Message[]
   onSend: (text: string) => void
   isLoading?: boolean
+  onNewChat?: () => void
   unreadCount?: number
   theme?: 'light' | 'dark' | 'auto'
   className?: string

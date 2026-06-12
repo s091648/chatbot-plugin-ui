@@ -27,6 +27,12 @@ jobs:
         working-directory: frontend/packages/chatbot-plugin-ui
         run: npm ci
 
+      - name: Set version from tag
+        working-directory: frontend/packages/chatbot-plugin-ui
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          npm version $VERSION --no-git-tag-version
+
       - name: Build
         working-directory: frontend/packages/chatbot-plugin-ui
         run: npm run build

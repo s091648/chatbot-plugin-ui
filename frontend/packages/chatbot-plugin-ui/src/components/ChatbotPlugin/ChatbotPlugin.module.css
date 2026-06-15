@@ -8,10 +8,12 @@
   align-items: flex-end;
   gap: 1rem;
   font-family: var(--cp-font-body);
+  pointer-events: none;
 }
 
 .fab {
   position: relative;
+  pointer-events: auto;
   width: 3.5rem;
   height: 3.5rem;
   background: var(--cp-primary);

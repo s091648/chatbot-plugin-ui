@@ -5,12 +5,12 @@
   "type": "module",
   "main": "./dist/chatbot-plugin-ui.umd.cjs",
   "module": "./dist/chatbot-plugin-ui.js",
-  "types": "./dist/types/index.d.ts",
+  "types": "./dist/index.d.ts",
   "exports": {
     ".": {
       "import": "./dist/chatbot-plugin-ui.js",
       "require": "./dist/chatbot-plugin-ui.umd.cjs",
-      "types": "./dist/types/index.d.ts"
+      "types": "./dist/index.d.ts"
     },
     "./dist/style.css": "./dist/style.css"
   },

@@ -5,6 +5,36 @@ import { ToolCallCard } from './ToolCallCard'
 import type { AgentInputProps } from '../../types'
 import styles from './AgentInput.module.css'
 
+function createInputHistory() {
+  const history: string[] = []
+  let index = -1
+  let draft = ''
+
+  return {
+    push(text: string) {
+      if (text && history[0] !== text) history.unshift(text)
+      index = -1
+      draft = ''
+    },
+    prev(current: string): string | null {
+      if (history.length === 0) return null
+      if (index === -1) draft = current
+      const next = index + 1
+      if (next >= history.length) return null
+      index = next
+      return history[index]
+    },
+    next(): string {
+      if (index <= 0) {
+        index = -1
+        return draft
+      }
+      index--
+      return history[index]
+    },
+  }
+}
+
 export function AgentInput({
   onSend,
   isLoading = false,
@@ -19,10 +49,12 @@ export function AgentInput({
 }: AgentInputProps) {
   const [value, setValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
+  const historyRef = useRef(createInputHistory())
 
   const handleSend = () => {
     const text = value.trim()
     if (!text || isLoading) return
+    historyRef.current.push(text)
     onSend(text)
     setValue('')
   }
@@ -31,6 +63,17 @@ export function AgentInput({
     if (e.key === 'Enter' && !e.shiftKey) {
       e.preventDefault()
       handleSend()
+      return
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault()
+      const prev = historyRef.current.prev(value)
+      if (prev !== null) setValue(prev)
+      return
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault()
+      setValue(historyRef.current.next())
     }
   }
 

@@ -145,5 +145,9 @@ export function useChat(options: UseChatOptions): UseChatReturn {
     setError(null)
   }, [initialMessages, updateMessages])
 
-  return { messages, sendMessage, isLoading, error, clearMessages }
+  const abort = useCallback(() => {
+    abortRef.current?.abort()
+  }, [])
+
+  return { messages, sendMessage, isLoading, error, clearMessages, abort }
 }

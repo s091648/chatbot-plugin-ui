@@ -58,6 +58,7 @@ export interface UseChatReturn {
   isLoading: boolean
   error: Error | null
   clearMessages: () => void
+  abort: () => void
 }
 
 export interface AgentInputProps {

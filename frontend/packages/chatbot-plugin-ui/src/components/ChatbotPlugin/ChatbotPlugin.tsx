@@ -25,10 +25,20 @@ export function ChatbotPlugin({
   emptyState = DEFAULT_EMPTY_STATE,
   width = 380,
   height = 520,
+  labels,
 }: ChatbotPluginProps) {
   const [open, setOpen] = useState(false)
   const [value, setValue] = useState('')
   const messagesEndRef = useRef<HTMLDivElement>(null)
+
+  const headerStatus = labels?.headerStatus ?? 'Online'
+  const dialogAriaLabel = labels?.dialogAriaLabel ?? 'Chat with AI assistant'
+  const newConversation = labels?.newConversation ?? 'New conversation'
+  const closeChat = labels?.closeChat ?? 'Close chat'
+  const openChat = labels?.openChat ?? 'Open chat'
+  const typingAriaLabel = labels?.typingAriaLabel ?? 'Agent is typing'
+  const inputAriaLabel = labels?.inputAriaLabel ?? 'Type a message'
+  const sendAriaLabel = labels?.sendAriaLabel ?? 'Send message'
 
   useEffect(() => {
     if (open) messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' })
@@ -61,7 +71,7 @@ export function ChatbotPlugin({
         data-open={open ? 'true' : 'false'}
         style={windowStyle}
         role="dialog"
-        aria-label="Chat with AI assistant"
+        aria-label={dialogAriaLabel}
         aria-hidden={!open}
       >
         {/* Header */}
@@ -73,7 +83,7 @@ export function ChatbotPlugin({
             </div>
             <div>
               <div className={styles.headerTitle}>{title}</div>
-              <div className={styles.headerSub}>Online</div>
+              <div className={styles.headerSub}>{headerStatus}</div>
             </div>
           </div>
           <div className={styles.headerActions}>
@@ -82,7 +92,7 @@ export function ChatbotPlugin({
                 className={styles.headerBtn}
                 onClick={onNewChat}
                 disabled={isLoading}
-                aria-label="New conversation"
+                aria-label={newConversation}
               >
                 <ComposeIcon size={16} />
               </button>
@@ -90,7 +100,7 @@ export function ChatbotPlugin({
             <button
               className={styles.headerBtn}
               onClick={() => setOpen(false)}
-              aria-label="Close chat"
+              aria-label={closeChat}
             >
               <CloseIcon size={18} />
             </button>
@@ -104,14 +114,14 @@ export function ChatbotPlugin({
           ) : (
             messages.map((m) =>
               m.role === 'tool' ? (
-                <ToolCallBlock key={m.id} message={m} />
+                <ToolCallBlock key={m.id} message={m} labels={labels?.toolCallBlock} />
               ) : (
-                <MessageBubble key={m.id} message={m} />
+                <MessageBubble key={m.id} message={m} labels={labels?.messageBubble} />
               )
             )
           )}
           {isLoading && (
-            <div className={styles.typingWrap} aria-label="Agent is typing">
+            <div className={styles.typingWrap} aria-label={typingAriaLabel}>
               <div className={styles.dot} />
               <div className={styles.dot} />
               <div className={styles.dot} />
@@ -131,13 +141,13 @@ export function ChatbotPlugin({
               onKeyDown={handleKey}
               placeholder={placeholder}
               disabled={isLoading}
-              aria-label="Type a message"
+              aria-label={inputAriaLabel}
             />
             <button
               className={styles.chatSendBtn}
               onClick={handleSend}
               disabled={isLoading || !value.trim()}
-              aria-label="Send message"
+              aria-label={sendAriaLabel}
             >
               <SendIcon size={14} />
             </button>
@@ -149,7 +159,7 @@ export function ChatbotPlugin({
       <button
         className={styles.fab}
         onClick={() => setOpen((v) => !v)}
-        aria-label={open ? 'Close chat' : 'Open chat'}
+        aria-label={open ? closeChat : openChat}
         aria-expanded={open}
       >
         {fabIcon ?? (open ? <CloseIcon size={24} /> : <ChatBubbleIcon size={24} />)}

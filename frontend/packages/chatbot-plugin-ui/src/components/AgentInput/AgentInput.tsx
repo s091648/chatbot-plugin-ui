@@ -46,10 +46,16 @@ export function AgentInput({
   onSuggestionClick,
   sendIcon,
   searchIcon,
+  labels,
 }: AgentInputProps) {
   const [value, setValue] = useState('')
   const inputRef = useRef<HTMLInputElement>(null)
   const historyRef = useRef(createInputHistory())
+
+  const inputAriaLabel = labels?.inputAriaLabel ?? 'Agent input'
+  const sendAriaLabel = labels?.sendAriaLabel ?? 'Send'
+  const sendLabel = labels?.send ?? 'Run'
+  const sendLoadingLabel = labels?.sendLoading ?? 'Running...'
 
   const handleSend = () => {
     const text = value.trim()
@@ -95,17 +101,17 @@ export function AgentInput({
             onKeyDown={handleKey}
             placeholder={placeholder}
             disabled={isLoading}
-            aria-label="Agent input"
+            aria-label={inputAriaLabel}
           />
           <div className={styles.actions}>
             <button
               className={styles.sendButton}
               onClick={handleSend}
               disabled={isLoading || !value.trim()}
-              aria-label="Send"
+              aria-label={sendAriaLabel}
             >
               {sendIcon ?? <SendIcon size={16} />}
-              {isLoading ? 'Running...' : 'Run'}
+              {isLoading ? sendLoadingLabel : sendLabel}
             </button>
           </div>
         </div>
@@ -114,7 +120,7 @@ export function AgentInput({
       {toolMessages.length > 0 && (
         <div className={styles.toolCallsArea}>
           {toolMessages.map((m) => (
-            <ToolCallCard key={m.id} message={m} defaultOpen />
+            <ToolCallCard key={m.id} message={m} defaultOpen labels={labels?.toolCallCard} />
           ))}
         </div>
       )}

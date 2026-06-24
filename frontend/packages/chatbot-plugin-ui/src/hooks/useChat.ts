@@ -76,6 +76,7 @@ export function useChat(options: UseChatOptions): UseChatReturn {
         const reader = response.body.getReader()
         const decoder = new TextDecoder()
         let assistantContent = ''
+        let assistantThinking = ''
 
         while (true) {
           const { done, value } = await reader.read()
@@ -92,6 +93,13 @@ export function useChat(options: UseChatOptions): UseChatReturn {
               updateMessages((prev) =>
                 prev.map((m) =>
                   m.id === assistantId ? { ...m, content: assistantContent } : m
+                )
+              )
+            } else if (event.type === 'thinking_delta') {
+              assistantThinking += event.content
+              updateMessages((prev) =>
+                prev.map((m) =>
+                  m.id === assistantId ? { ...m, thinking: assistantThinking } : m
                 )
               )
             } else if (event.type === 'tool_call_start') {

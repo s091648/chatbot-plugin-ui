@@ -5,6 +5,7 @@ export { MessageBubble } from './components/ChatbotPlugin'
 export { ToolCallBlock } from './components/ChatbotPlugin'
 export { useChat } from './hooks/useChat'
 export { openaiAdapter } from './adapters/openai'
+export { anthropicAdapter } from './adapters/anthropic'
 
 export type {
   Message,
@@ -15,6 +16,11 @@ export type {
   RequestOptions,
   UseChatOptions,
   UseChatReturn,
+  MessageBubbleLabels,
+  ToolCallBlockLabels,
+  ToolCallCardLabels,
+  ChatbotPluginLabels,
+  AgentInputLabels,
   AgentInputProps,
   ChatbotPluginProps,
 } from './types'

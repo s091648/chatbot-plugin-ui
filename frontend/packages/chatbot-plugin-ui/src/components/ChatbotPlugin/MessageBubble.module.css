@@ -38,3 +38,51 @@
   color: var(--cp-on-primary);
   border-top-right-radius: 0.25rem;
 }
+
+.thinking {
+  border: 1px solid var(--cp-outline);
+  border-radius: var(--cp-radius-lg);
+  overflow: hidden;
+  font-family: var(--cp-font-body);
+}
+
+.thinking-toggle {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 0.75rem;
+  color: var(--cp-outline);
+  text-align: left;
+}
+
+.thinking-toggle:hover {
+  background: var(--cp-secondary-container);
+}
+
+.thinking-arrow {
+  display: inline-block;
+  font-size: 0.625rem;
+  transition: transform 0.15s ease;
+}
+
+.thinking-arrow--open {
+  transform: rotate(90deg);
+}
+
+.thinking-content {
+  margin: 0;
+  padding: 0.75rem;
+  font-size: 0.75rem;
+  line-height: 1.6;
+  color: var(--cp-outline);
+  white-space: pre-wrap;
+  word-break: break-word;
+  border-top: 1px solid var(--cp-outline);
+  font-family: var(--cp-font-body);
+  background: var(--cp-secondary-container);
+}

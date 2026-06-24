@@ -4,6 +4,7 @@ export interface Message {
   id: string
   role: 'user' | 'assistant' | 'tool'
   content: string
+  thinking?: string
   toolCall?: ToolCall
   toolResult?: ToolCallResult
   timestamp: Date
@@ -23,6 +24,7 @@ export interface ToolCallResult {
 
 export type StreamEvent =
   | { type: 'text_delta'; content: string }
+  | { type: 'thinking_delta'; content: string }
   | { type: 'tool_call_start'; tool: ToolCall }
   | { type: 'tool_call_result'; result: ToolCallResult }
   | { type: 'done' }
@@ -61,6 +63,45 @@ export interface UseChatReturn {
   abort: () => void
 }
 
+export interface MessageBubbleLabels {
+  agentName?: string
+  thinkingToggle?: string
+}
+
+export interface ToolCallBlockLabels {
+  toolPrefix?: string
+  statusRunning?: string
+  statusDone?: string
+  statusError?: string
+}
+
+export interface ToolCallCardLabels {
+  statusRunning?: string
+  statusDone?: string
+  statusError?: string
+}
+
+export interface ChatbotPluginLabels {
+  headerStatus?: string
+  dialogAriaLabel?: string
+  newConversation?: string
+  closeChat?: string
+  openChat?: string
+  typingAriaLabel?: string
+  inputAriaLabel?: string
+  sendAriaLabel?: string
+  messageBubble?: MessageBubbleLabels
+  toolCallBlock?: ToolCallBlockLabels
+}
+
+export interface AgentInputLabels {
+  inputAriaLabel?: string
+  sendAriaLabel?: string
+  send?: string
+  sendLoading?: string
+  toolCallCard?: ToolCallCardLabels
+}
+
 export interface AgentInputProps {
   onSend: (text: string) => void
   isLoading?: boolean
@@ -72,6 +113,7 @@ export interface AgentInputProps {
   onSuggestionClick?: (text: string) => void
   sendIcon?: ReactNode
   searchIcon?: ReactNode
+  labels?: AgentInputLabels
 }
 
 export interface ChatbotPluginProps {
@@ -89,4 +131,5 @@ export interface ChatbotPluginProps {
   emptyState?: ReactNode
   width?: number | string
   height?: number | string
+  labels?: ChatbotPluginLabels
 }

@@ -1,18 +1,23 @@
 import { useState } from 'react'
 import { TerminalIcon, ChevronDownIcon } from '../../icons'
-import type { Message } from '../../types'
+import type { Message, ToolCallCardLabels } from '../../types'
 import styles from './ToolCallCard.module.css'
 
 interface ToolCallCardProps {
   message: Message
   defaultOpen?: boolean
+  labels?: ToolCallCardLabels
 }
 
-export function ToolCallCard({ message, defaultOpen = false }: ToolCallCardProps) {
+export function ToolCallCard({ message, defaultOpen = false, labels }: ToolCallCardProps) {
   const [open, setOpen] = useState(defaultOpen)
   const { toolCall, toolResult } = message
 
   if (!toolCall) return null
+
+  const statusRunning = labels?.statusRunning ?? 'Running'
+  const statusDone = labels?.statusDone ?? 'Done'
+  const statusError = labels?.statusError ?? 'Error'
 
   const status = toolResult
     ? toolResult.isError
@@ -20,7 +25,7 @@ export function ToolCallCard({ message, defaultOpen = false }: ToolCallCardProps
       : 'done'
     : 'running'
 
-  const badgeLabel = status === 'running' ? 'Running' : status === 'done' ? 'Done' : 'Error'
+  const badgeLabel = { running: statusRunning, done: statusDone, error: statusError }[status]
 
   return (
     <div className={styles.card}>

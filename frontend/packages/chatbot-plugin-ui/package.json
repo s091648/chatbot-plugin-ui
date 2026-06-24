@@ -1,6 +1,6 @@
 {
   "name": "@s091648/chatbot-plugin-ui",
-  "version": "0.1.1",
+  "version": "0.2.0",
   "description": "React components for AI agent chat interfaces — AgentInput and ChatbotPlugin",
   "type": "module",
   "main": "./dist/chatbot-plugin-ui.umd.cjs",
